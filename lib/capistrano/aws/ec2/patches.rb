@@ -3,8 +3,8 @@
 require 'aws-sdk-ec2'
 
 module Capistrano
+  # Patches the Capistrano Configuration class to add our aws-ec2 features
   class Configuration
-
     def ec2_instances(tags: nil)
       instances = ec2_resource.instances
       return instances if tags.nil?
