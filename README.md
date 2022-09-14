@@ -1,15 +1,17 @@
-# Capistrano::Aws::Ec2
+Capistrano-AWS-EC2
+==================
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/capistrano/aws/ec2`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Your EC2 instances are behind a load balancer and change their addresses way too often? Fear no more! 
+Capistrano-AWS-EC2 allows you to query your EC2 instances and add them to capistrano.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano-aws-ec2'
+group :development do
+  gem 'capistrano-aws-ec2', require: false
+end
 ```
 
 And then execute:
@@ -22,7 +24,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add EC2 instances to your capistrano configuration:
+
+```ruby
+# config/deploy/production.rb
+ec2_instances.each do |instance|
+  # this could be your custom filter logic:
+  next unless instance.tags.any? { |tag| tag.key == 'foo' && tag.value == 'bar' }
+
+  server instance.public_ip_address, user: 'deploy', roles: %w[web app db], primary: true
+end
+```
+
+Configure AWS:
+
+```ruby
+# config/deploy.rb or per stage
+set :aws_region, 'eu-central-1' # falls back to ENV['AWS_REGION'] or ENV['AWS_DEFAULT_REGION']
+set :aws_access_key_id, 'my-aws-key' # falls back to ENV["#{stage.upcase}_ACCESS_KEY_ID"] or ENV['AWS_ACCESS_KEY_ID']
+set :aws_secret_access_key, 'my-aws-secret' # falls back to ENV["#{stage.upcase}_SECRET_ACCESS_KEY"] || ENV['AWS_SECRET_ACCESS_KEY']
+```
 
 ## Development
 

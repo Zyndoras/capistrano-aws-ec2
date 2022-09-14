@@ -16,7 +16,7 @@ module Capistrano
     end
 
     def aws_region
-      fetch(:aws_region, ENV['AWS_REGION'])
+      fetch(:aws_region, ENV['AWS_REGION'] || ENV['AWS_DEFAULT_REGION'])
     end
 
     def aws_credentials
@@ -24,11 +24,11 @@ module Capistrano
     end
 
     def aws_access_key_id
-      fetch(:aws_access_key_id, ENV["#{stage.upcase}_ACCESS_KEY_ID"])
+      fetch(:aws_access_key_id, ENV["#{stage.upcase}_ACCESS_KEY_ID"] || ENV['AWS_ACCESS_KEY_ID'])
     end
 
     def aws_secret_access_key
-      fetch(:aws_secret_access_key, ENV["#{stage.upcase}_SECRET_ACCESS_KEY"])
+      fetch(:aws_secret_access_key, ENV["#{stage.upcase}_SECRET_ACCESS_KEY"] || ENV['AWS_SECRET_ACCESS_KEY'])
     end
 
     def aws_session_token
