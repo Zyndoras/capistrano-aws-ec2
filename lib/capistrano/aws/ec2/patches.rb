@@ -5,8 +5,11 @@ require 'aws-sdk-ec2'
 module Capistrano
   class Configuration
 
-    def ec2_instances
-      ec2_resource.instances
+    def ec2_instances(tags: nil)
+      instances = ec2_resource.instances
+      return instances if tags.nil?
+
+      instances.filter { |i| tags.all? { |k, v| i.tags.any? { |tag| tag.key == k && tag.value == v } } }
     end
 
     private
