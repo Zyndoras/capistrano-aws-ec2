@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require_relative 'lib/capistrano/aws/ec2/version'
 
 Gem::Specification.new do |spec|
@@ -29,14 +31,11 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'aws-sdk-ec2', '~> 1.332'
-  spec.add_dependency 'capistrano', '~> 3.17'
+  spec.add_dependency 'aws-sdk-ec2', '~> 1.0'
+  spec.add_dependency 'capistrano', '~> 3.0'
 
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-performance'
-
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
 end

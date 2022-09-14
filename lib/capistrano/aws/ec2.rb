@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-require_relative 'ec2/version'
+require 'capistrano'
+require 'capistrano/aws/ec2/version'
+require 'capistrano/aws/ec2/patches'
 
 module Capistrano
   module Aws
     module Ec2
       class Error < StandardError; end
-      # Your code goes here...
     end
   end
 end
