@@ -5,11 +5,16 @@ require 'aws-sdk-ec2'
 module Capistrano
   # Patches the Capistrano Configuration class to add our aws-ec2 features
   class Configuration
-    def ec2_instances(tags: nil)
-      instances = ec2_resource.instances
-      return instances if tags.nil?
+    EC2_STATE_RUNNING_CODE = 16
 
-      instances.filter { |i| tags.all? { |k, v| i.tags.any? { |tag| tag.key == k && tag.value == v } } }
+    def ec2_instances(running_only: true, tags: {})
+      ec2_resource.instances.filter do |instance|
+        # Filter out non-running instances
+        next false if running_only && instance.state.code != EC2_STATE_RUNNING_CODE
+
+        # Filter out instances not matching the given tags
+        tags.all? { |k, v| i.tags.any? { |tag| tag.key == k && tag.value == v } }
+      end
     end
 
     private
