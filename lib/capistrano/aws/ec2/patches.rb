@@ -13,7 +13,7 @@ module Capistrano
         next false if running_only && instance.state.code != EC2_STATE_RUNNING_CODE
 
         # Filter out instances not matching the given tags
-        tags.all? { |k, v| i.tags.any? { |tag| tag.key == k && tag.value == v } }
+        tags.all? { |key, value| instance.tags.any? { |tag| tag.key == key && tag.value == value } }
       end
     end
 

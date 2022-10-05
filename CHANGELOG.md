@@ -1,6 +1,9 @@
 Changelog
 =========
 
+#### 0.1.8 ####
+* Fix some variable names
+
 #### 0.1.7 ####
 * Filter out non-running instances by default
 
