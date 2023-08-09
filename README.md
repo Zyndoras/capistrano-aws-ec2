@@ -24,6 +24,14 @@ Or install it yourself as:
 
 ## Usage
 
+Require the gem in `Capfile`
+
+```ruby
+# Capfile
+require 'capistrano/aws/ec2'
+```
+
+
 Add EC2 instances to your capistrano configuration:
 
 ```ruby
